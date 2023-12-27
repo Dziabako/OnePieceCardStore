@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, IntegerField, FloatField
@@ -44,6 +44,8 @@ def add_card():
         form.populate_obj(new_card)
         db.session.add(new_card)
         db.session.commit()
+
+        flash("Added new card to database") 
 
         return render_template("index.html")
 
