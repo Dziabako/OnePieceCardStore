@@ -39,6 +39,7 @@ def index():
 
 @app.route("/add_card", methods=["GET", "POST"])
 def add_card():
+    """Adding new card to database"""
     form = CardForm()
 
     if form.validate_on_submit():
