@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, IntegerField, FloatField
@@ -27,7 +27,7 @@ class CardForm(FlaskForm):
     price = FloatField("Price")
     image = StringField()
 
-# db.create_all()
+#db.create_all()
 
 @app.route("/")
 def index():
@@ -40,7 +40,7 @@ def add_card():
 
     if form.validate_on_submit():
         new_card = Card()
-        # populate object with the same labels from form to database
+        # Populate object with the same labels from form to database
         form.populate_obj(new_card)
         db.session.add(new_card)
         db.session.commit()
