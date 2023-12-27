@@ -27,7 +27,7 @@ class CardForm(FlaskForm):
     price = FloatField("Price")
     image = StringField()
 
-db.create_all()
+# db.create_all()
 
 @app.route("/")
 def index():
@@ -38,7 +38,16 @@ def index():
 def add_card():
     form = CardForm()
 
+    if form.validate_on_submit():
+        new_card = Card()
+        # populate object with the same labels from form to database
+        form.populate_obj(new_card)
+        db.session.add(new_card)
+        db.session.commit()
 
+        return render_template("index.html")
+
+    
     return render_template("add_card.html", form=form)
 
 
