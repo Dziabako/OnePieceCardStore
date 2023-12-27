@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect
+from flask import Flask, render_template, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, IntegerField, FloatField
@@ -29,9 +29,12 @@ class CardForm(FlaskForm):
 
 #db.create_all()
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    form = CardForm()
+    all_cards = Card.query.all()
+
+    return render_template("index.html", form=form, cards=all_cards)
 
 
 @app.route("/add_card", methods=["GET", "POST"])
@@ -47,7 +50,7 @@ def add_card():
 
         flash("Added new card to database") 
 
-        return render_template("index.html")
+        return redirect(url_for("index"))
 
     
     return render_template("add_card.html", form=form)

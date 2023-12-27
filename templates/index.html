@@ -5,67 +5,21 @@
 {% block body %}
 <div class="card-items mx-lg-5">
 
-    <div class="row">
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-        <div class="col-3 card-div text-center">
-            <h4>Name</h4>
-            <img class="card-image" src="/static/images/placeholder.jpg">
-            <h4>Version</h4>
-            <h4>Price</h4>
-            <h4>Add to basket</h4>
-        </div>
-    </div>
+    <!-- batch returns a container with 4 objects in it. You need to iterate over them as well. -->
+    {% for row in cards | batch(4) %}
+        <div class="row">
+            {% for card in row %}
+            <div class="col-3 card-div text-center pb-lg-5">
+                <h4>{{ card.name }}</h4>
+                <img class="card-image" src="{{ card.image }}">
+                <h4>{{ card.version }}</h4>
+                <h4>{{ card.price }}</h4>
+                <h4>Quantity</h4>
+                <h4>Add to basket</h4>
+            </div>
+            {% endfor %}
+        </div> 
+    {% endfor %}
     
 </div>
 {% endblock %}
