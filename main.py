@@ -34,5 +34,13 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/add_card", methods=["GET", "POST"])
+def add_card():
+    form = CardForm()
+
+
+    return render_template("add_card.html", form=form)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
