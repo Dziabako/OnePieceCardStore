@@ -57,5 +57,12 @@ def add_card():
     return render_template("add_card.html", form=form)
 
 
+@app.route("/all_cards")
+def all_cards():
+    cards = Card.query.all()
+
+    return render_template("all_cards.html", cards=cards)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

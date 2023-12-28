@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %} Cards database {% endblock %}
+
+{% block body %}
+<!-- Modal function to display dialog box when deleteing -->
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">This entry will be deleted:</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="idDeleteModalBody">
+          ...
+        </div>
+        <div class="modal-footer">
+            <form action="" method="GET" id="confirmDeleteForm">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+  
+  
+<!-- Skrypt JQuery pozwalajacy na polaczenie wielu przyciskow z jednym modalem (nie do konca go rozumiem) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+      $(document).ready(function () {
+          // For A Delete Record Popup
+          // This function is applied to all elements with class ending with ".delete-confirm"
+          $('.delete-confirm').click(function () {
+              // get attributes of the found element
+              var desc = $(this).attr('data-desc');
+              var url = $(this).attr('data-url');
+              // the #... designates id of an element - change the text in the modal window
+              $('#idDeleteModalBody').text(desc);
+              $("#confirmDeleteForm").attr("action", url);
+          });
+      });
+  </script>
+
+
+
+<div class="container mx-lg-5 px-lg-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Version</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+            <tr>
+                <th scope="row">{{ card.id }}</th>
+                <td>{{ card.name }}</td>
+                <td>{{ card.version }}</td>
+                <td>{{ card.quantity }}</td>
+                <td>{{ card.price }}</td>
+                <td>
+                    <a href="#" class="btn btn-success btn-sm">Edit</a>
+
+                    <!-- data-desc tekst do wyswietlenia w oknie / data-url adres na ktory wskazuje formularz w oknie modalnym / data-bs-target to id modala do ktorego ma sie odnosic / Jinja nie aceptuje f-string -->
+                    <a type="button" class="btn btn-danger btn-sm delete-confirm" data-bs-toggle="modal"
+                       data-bs-target="#confirmDeleteModal" data-desc="#"
+                       data-url="#">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
