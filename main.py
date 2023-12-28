@@ -86,6 +86,13 @@ def edit_card(card_id):
     return render_template("edit_card.html", form=form, card=card)
 
 
+@app.route("/delete_card/<int:card_id>")
+def delete_card(card_id):
+    card = Card.query.filter(Card.id == card_id).first()
+    db.session.delete(card)
+    db.session.commit()
+
+    return redirect(url_for("all_cards"))
 
 
 if __name__ == "__main__":

@@ -69,8 +69,8 @@
 
                     <!-- data-desc tekst do wyswietlenia w oknie / data-url adres na ktory wskazuje formularz w oknie modalnym / data-bs-target to id modala do ktorego ma sie odnosic / Jinja nie aceptuje f-string -->
                     <a type="button" class="btn btn-danger btn-sm delete-confirm" data-bs-toggle="modal"
-                       data-bs-target="#confirmDeleteModal" data-desc="#"
-                       data-url="#">
+                       data-bs-target="#confirmDeleteModal" data-desc="{{ 'Remove card {} from database?'.format(card.name) }}"
+                       data-url="{{ url_for('delete_card', card_id=card.id) }}">
                         Delete
                     </a>
                 </td>
