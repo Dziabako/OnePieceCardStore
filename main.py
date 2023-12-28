@@ -64,5 +64,29 @@ def all_cards():
     return render_template("all_cards.html", cards=cards)
 
 
+@app.route("/edit_card/<int:card_id>", methods=["GET", "POST"])
+def edit_card(card_id):
+    card = Card.query.filter(Card.id == card_id).first()
+    # Attributes from card object matching form field names will be used for field values
+    form = CardForm(obj=card)
+
+    if form.validate_on_submit():
+        card.name = form.name.data
+        card.version = form.version.data
+        card.quantity = form.quantity.data
+        card.price = form.price.data
+        card.image = form.image.data
+
+        db.session.commit()
+
+        flash("Succesfully updated card")
+
+        return redirect(url_for("all_cards"))
+
+    return render_template("edit_card.html", form=form, card=card)
+
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
