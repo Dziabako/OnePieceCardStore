@@ -13,12 +13,12 @@ class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     version = db.Column(db.String(10))
-    quantity = db.Column(db.Integer)
+    stock = db.Column(db.Integer)
     price = db.Column(db.Float)
     image = db.Column(db.String(250))
 
 
-#db.create_all()
+# db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -64,7 +64,7 @@ def edit_card(card_id):
     if form.validate_on_submit():
         card.name = form.name.data
         card.version = form.version.data
-        card.quantity = form.quantity.data
+        card.stock = form.stock.data
         card.price = form.price.data
         card.image = form.image.data
 

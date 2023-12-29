@@ -52,7 +52,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
                 <th scope="col">Version</th>
-                <th scope="col">Quantity</th>
+                <th scope="col">Stock</th>
                 <th scope="col">Price</th>
             </tr>
         </thead>
@@ -62,7 +62,7 @@
                 <th scope="row">{{ card.id }}</th>
                 <td>{{ card.name }}</td>
                 <td>{{ card.version }}</td>
-                <td>{{ card.quantity }}</td>
+                <td>{{ card.stock }}</td>
                 <td>{{ card.price }}</td>
                 <td>
                     <a href="{{ url_for('edit_card', card_id=card.id) }}" class="btn btn-success btn-sm">Edit</a>

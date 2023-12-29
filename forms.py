@@ -6,6 +6,6 @@ from wtforms.validators import DataRequired
 class CardForm(FlaskForm):
     name = StringField("Name")
     version = StringField("Version")
-    quantity = IntegerField("Quantity")
+    stock = IntegerField("Stock")
     price = FloatField("Price")
     image = StringField()
