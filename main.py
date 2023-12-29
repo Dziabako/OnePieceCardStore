@@ -86,5 +86,12 @@ def delete_card(card_id):
     return redirect(url_for("all_cards"))
 
 
+@app.route("/card_display/<int:card_id>")
+def card_display(card_id):
+    card = Card.query.filter(Card.id == card_id).first()
+
+    return render_template("card_display.html", card=card)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

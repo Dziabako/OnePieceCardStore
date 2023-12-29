@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block title %} {{ card.name }} {% endblock %}
+
+
+{% block body %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col">
+                <img src="{{ card.image }}">
+            </div>
+    
+            <div class="col">
+                <div class="row">
+                    <h4 class="col">Name: </h4>
+                    <div class="col"> {{ card.name }} </div>
+                </div>
+                <div class="row">
+                    <h4 class="col">Version: </h4>
+                    <div class="col"> {{ card.version }} </div>
+                </div>
+                <div class="row">
+                    <h4 class="col">Quantity: </h4>
+                    <div class="col"> 1 </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-info">ADD</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

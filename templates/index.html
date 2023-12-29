@@ -10,7 +10,7 @@
         <div class="row">
             {% for card in row %}
             <div class="col-3 card-div text-center pb-lg-5">
-                <h4>{{ card.name }}</h4>
+                <a href="{{ url_for('card_display', card_id=card.id) }}">{{ card.name }}</a>
                 <img class="card-image" src="{{ card.image }}">
                 <h4>{{ card.version }}</h4>
                 <h4>{{ card.price }}</h4>
