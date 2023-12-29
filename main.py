@@ -1,8 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, IntegerField, FloatField
-from wtforms.validators import DataRequired
+from forms import CardForm
 
 
 app = Flask(__name__)
@@ -19,13 +17,6 @@ class Card(db.Model):
     price = db.Column(db.Float)
     image = db.Column(db.String(250))
 
-
-class CardForm(FlaskForm):
-    name = StringField("Name")
-    version = StringField("Version")
-    quantity = IntegerField("Quantity")
-    price = FloatField("Price")
-    image = StringField()
 
 #db.create_all()
 
