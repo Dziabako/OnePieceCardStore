@@ -9,3 +9,9 @@ class CardForm(FlaskForm):
     stock = IntegerField("Stock")
     price = FloatField("Price")
     image = StringField()
+
+
+class BasketForm(FlaskForm):
+    name = StringField("Name")
+    quantity = IntegerField("Quantity")
+    total_price = FloatField("Total price")

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from forms import CardForm
+from forms import CardForm, BasketForm
 
 
 app = Flask(__name__)
@@ -17,17 +17,24 @@ class Card(db.Model):
     price = db.Column(db.Float)
     image = db.Column(db.String(250))
 
+class Basket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
+    quantity = db.Column(db.Integer)
+    total_price = db.Column(db.Float)
+
 
 # db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    form = CardForm()
+    form = BasketForm()
     all_cards = Card.query.all()
 
     return render_template("index.html", form=form, cards=all_cards)
 
 
+### CARD FUNCTIONS ###
 @app.route("/add_card", methods=["GET", "POST"])
 def add_card():
     """Adding new card to database"""
@@ -91,6 +98,30 @@ def card_display(card_id):
     card = Card.query.filter(Card.id == card_id).first()
 
     return render_template("card_display.html", card=card)
+
+
+### BASKET ###
+@app.route("/basket/<int:card_id>/<int:quantity>")
+def basket(card_id, quantity):
+    card = Card.filter(Card.id == card_id).first()
+    form = BasketForm()
+
+    if form.validate_on_submit():
+        basket_item = Basket()
+        basket_item.name = card.name
+        basket_item.quantity = quantity
+        basket_item.total_price = card.price * quantity
+
+        db.session.add(basket_item)
+        db.session.commit()
+
+        flash("Item has been added to basket")
+
+        return redirect(url_for("index"))
+
+    basket = Basket.query.all()
+
+    return render_template("basket.html", basket=basket)
 
 
 if __name__ == "__main__":
