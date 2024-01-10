@@ -12,6 +12,4 @@ class CardForm(FlaskForm):
 
 
 class BasketForm(FlaskForm):
-    name = StringField("Name")
     quantity = IntegerField("Quantity")
-    total_price = FloatField("Total price")
