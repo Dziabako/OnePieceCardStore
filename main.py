@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request, session
 from forms import CardForm, BasketForm
 from databases import Card
 from app import app
@@ -80,27 +80,24 @@ def card_display(card_id):
 
 
 ### BASKET ###
-# @app.route("/basket/<int:card_id>/<int:quantity>")
-# def basket(card_id, quantity):
-#     card = Card.filter(Card.id == card_id).first()
-#     form = BasketForm()
+@app.route("/add_basket", methods=["GET", "POST"])
+def add_basket():
+    card_id = request.form.get("card_id")
+    card = Card.query.filter(Card.id == card_id).first()
+    quantity = request.form.get("quantity")
+    total = card.price * quantity
 
-#     if form.validate_on_submit():
-#         basket_item = Basket()
-#         basket_item.name = card.name
-#         basket_item.quantity = quantity
-#         basket_item.total_price = card.price * quantity
+    if card_id and quantity and request.method == "POST":
+        dictItems = {card_id: {
+            "card": card,
+            "quantity": quantity,
+            "total": total,
+        }}
 
-#         db.session.add(basket_item)
-#         db.session.commit()
-
-#         flash("Item has been added to basket")
-
-#         return redirect(url_for("index"))
-
-#     basket = Basket.query.all()
-
-#     return render_template("basket.html", basket=basket)
+        if "basket" in session:
+            print(session["basket"])
+        else:
+            session["basket"] = dictItems
 
 
 if __name__ == "__main__":
