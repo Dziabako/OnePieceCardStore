@@ -96,13 +96,28 @@ def add_basket():
         }}
 
         if "basket" in session:
+            if dictItems[card_id]["card"] not in session["basket"]:
+                session["basket"] = dictItems
+                flash("Item has been added to basket!")
+                card.stock = int(card.stock) - int(quantity)
+                db.session.commit()
+            else:
+                new_quantity = request.form.get("quantity")
+                dictItems[card_id]["quantity"] = new_quantity + quantity
+                card.stock = int(card.stock) - int(quantity)
+                db.session.commit()
             print(session["basket"])
-            return redirect(url_for("card_display", card_id=card.id))
-        else:
-            session["basket"] = dictItems
-            print(session["basket"])
-            flash("Item has been added to basket!")
             return redirect(url_for("index"))
+
+
+        # if "basket" in session:
+        #     print(session["basket"])
+        #     return redirect(url_for("card_display", card_id=card.id))
+        # else:
+        #     session["basket"] = dictItems
+        #     print(session["basket"])
+        #     flash("Item has been added to basket!")
+        #     return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
