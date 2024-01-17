@@ -110,15 +110,5 @@ def add_basket():
             return redirect(url_for("index"))
 
 
-        # if "basket" in session:
-        #     print(session["basket"])
-        #     return redirect(url_for("card_display", card_id=card.id))
-        # else:
-        #     session["basket"] = dictItems
-        #     print(session["basket"])
-        #     flash("Item has been added to basket!")
-        #     return redirect(url_for("index"))
-
-
 if __name__ == "__main__":
     app.run(debug=True)
