@@ -88,23 +88,28 @@ def add_basket():
     total = float(card.price) * float(quantity)
     total = round(total, 2)
 
+    if "basket" not in session:
+        session["basket"] = {}
+
     if card_id and quantity and request.method == "POST":
-        dictItems = {card_id: {
+        dictItems = {
             "card": card.version,
             "quantity": quantity,
             "total": total,
-        }}
+        }
 
         if "basket" in session:
-            if dictItems[card_id]["card"] not in session["basket"]:
-                session["basket"] = dictItems
+            if card_id not in session["basket"]:
+                session["basket"][card_id] = dictItems
                 flash("Item has been added to basket!")
                 card.stock = int(card.stock) - int(quantity)
                 db.session.commit()
             else:
                 new_quantity = request.form.get("quantity")
-                dictItems[card_id]["quantity"] = new_quantity + quantity
-                card.stock = int(card.stock) - int(quantity)
+                session["basket"][card_id]["quantity"] = new_quantity
+                flash("Quantity updated")
+                card.stock = int(card.stock) + int(quantity)
+                card.stock = int(card.stock) - int(new_quantity)
                 db.session.commit()
             print(session["basket"])
             return redirect(url_for("index"))
