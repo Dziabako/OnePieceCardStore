@@ -93,7 +93,9 @@ def add_basket():
 
     if card_id and quantity and request.method == "POST":
         dictItems = {
-            "card": card.version,
+            "card": card.name,
+            "version": card.version,
+            "price": card.price,
             "quantity": quantity,
             "total": total,
         }
