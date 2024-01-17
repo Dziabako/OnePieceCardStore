@@ -85,19 +85,24 @@ def add_basket():
     card_id = request.form.get("card_id")
     card = Card.query.filter(Card.id == card_id).first()
     quantity = request.form.get("quantity")
-    total = card.price * quantity
+    total = float(card.price) * float(quantity)
+    total = round(total, 2)
 
     if card_id and quantity and request.method == "POST":
         dictItems = {card_id: {
-            "card": card,
+            "card": card.version,
             "quantity": quantity,
             "total": total,
         }}
 
         if "basket" in session:
             print(session["basket"])
+            return redirect(url_for("card_display", card_id=card.id))
         else:
             session["basket"] = dictItems
+            print(session["basket"])
+            flash("Item has been added to basket!")
+            return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
