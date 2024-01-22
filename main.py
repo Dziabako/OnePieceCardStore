@@ -89,10 +89,11 @@ def add_basket():
     total = round(total, 2)
 
     if "basket" not in session:
-        session["basket"] = {}
+        session["basket"] = []
 
     if card_id and quantity and request.method == "POST":
         dictItems = {
+            "card_id": card.id,
             "card": card.name,
             "version": card.version,
             "price": card.price,
@@ -102,7 +103,7 @@ def add_basket():
 
         if "basket" in session:
             if card_id not in session["basket"]:
-                session["basket"][card_id] = dictItems
+                session["basket"].append(dictItems)
                 flash("Item has been added to basket!")
                 card.stock = int(card.stock) - int(quantity)
                 db.session.commit()
@@ -115,6 +116,16 @@ def add_basket():
                 db.session.commit()
             print(session["basket"])
             return redirect(url_for("index"))
+        
+
+@app.route("/basket")
+def basket():
+    total_price = 0
+
+    for card in session["basket"]:
+        total_price += card["total"]
+
+    return render_template("basket.html", total_price=total_price)
 
 
 if __name__ == "__main__":

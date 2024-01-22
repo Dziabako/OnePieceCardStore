@@ -21,16 +21,23 @@
                 </tr>
             </thead>
             <tbody>
+                {% for card in session['basket'] %}
                 <tr>
-                    <th scope="row">#</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <th scope="row">{{ card['card_id'] }}</th>
+                    <td>{{ card['name'] }}</td>
+                    <td>{{ card['version'] }}</td>
+                    <td>{{ card['price'] }}</td>
+                    <td>{{ card['quantity'] }}</td>
+                    <td>{{ card['total'] }}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
+
+        <div class="row">
+            <p class="col">Total price:</p>
+            <p class="col">{{ total_price }}</p>
+        </div>
 
     </div>
 {% endblock %}
