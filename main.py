@@ -172,5 +172,33 @@ def register():
     return render_template("register.html", form=form)
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        user = User.query.filter(User.email == email).first()
+        
+        if not user: 
+            flash("That email does not exist, pleae try again.")
+            return redirect(url_for('login'))
+        elif not check_password_hash(user.password, password):
+            flash("Wrong password! Try again")
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            return redirect(url_for('index'))
+
+    return render_template("login.html", form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
