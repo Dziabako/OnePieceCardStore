@@ -1,8 +1,15 @@
 from flask import render_template, flash, redirect, url_for, request, session
-from forms import CardForm, BasketForm
-from databases import Card
-from app import app
-from databases import db, Card
+from flask_login import login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
+from forms import CardForm, BasketForm, UserForm, LoginForm
+from databases import Card, User, db
+from app import app, login_manager
+
+
+db.create_all()
+@login_manager.user_loader
+def load_user(id):
+    return User.query.filter(User.id == id).first()
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -126,6 +133,43 @@ def basket():
         total_price += card["total"]
 
     return render_template("basket.html", total_price=total_price)
+
+
+### USERS ###
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = UserForm()
+
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        name = form.name.data
+        adress = form.adress.data
+        city = form.city.data
+        zipcode = form.zipcode.data
+        country = form.country.data
+
+        if User.query.filter(User.email == email).first() or User.query.filter(User.name == name).first():
+            flash("User already exist! Login first!")
+            return redirect(url_for("login"))
+        
+        hash_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+
+        new_user = User(
+            email = email,
+            password = hash_password,
+            name = name,
+            adress = adress,
+            city = city,
+            zipcode = zipcode,
+            country = country
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        flash("User created! You can Login now!")
+        return redirect(url_for("index"))
+    
+    return render_template("register.html", form=form)
 
 
 if __name__ == "__main__":

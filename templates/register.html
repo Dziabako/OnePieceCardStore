@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Register new user{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-5 h1">New user</div>
+    </div>
+    <form id="user_form" action="{{ url_for('register') }}" method="POST">
+        {{ form.csrf_token }}
+        <div class="row mb-3">
+            <div class="col-1 col-form-label">{{ form.name.label }}</div>
+            <div class="col-4">
+                {{ form.name(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-1 col-form-label">{{ form.email.label }}</div>
+            <div class="col-4">
+                {{ form.email(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.password.label }}</div>
+            <div class="col-4">
+                {{ form.password(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.name.label }}</div>
+            <div class="col-4">
+                {{ form.name(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.adress.label }}</div>
+            <div class="col-4">
+                {{ form.adress(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.city.label }}</div>
+            <div class="col-4">
+                {{ form.city(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.zipcode.label }}</div>
+            <div class="col-4">
+                {{ form.zipcode(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.country.label }}</div>
+            <div class="col-4">
+                {{ form.country(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-1"><input type="submit" value="Register" class="btn btn-primary"></div>
+        </div>
+    </form>
+</div>
+{% endblock %}

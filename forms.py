@@ -13,3 +13,18 @@ class CardForm(FlaskForm):
 
 class BasketForm(FlaskForm):
     quantity = IntegerField("Quantity")
+
+
+class UserForm(FlaskForm):
+    email = StringField("Email: ")
+    password = StringField("Password: ")
+    name = StringField("Name: ")
+    adress = StringField("Adress: ")
+    city = StringField("City: ")
+    zipcode = IntegerField("ZipCode: ")
+    country = StringField("Country: ")
+
+
+class LoginForm(FlaskForm):
+    email = StringField("Email: ")
+    password = StringField("Password: ")
