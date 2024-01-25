@@ -3,7 +3,7 @@
 {% block title %} Basket {% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
+    <div class="container mx-lg-5 px-lg-5">
 
         <div class="row">
             <h1>Your Basket</h1>
@@ -38,6 +38,8 @@
             <p class="col">Total price:</p>
             <p class="col">{{ total_price }}</p>
         </div>
+
+        <a class="btn btn-info row-cols-1" href="#">Go to checkout</a>
 
     </div>
 {% endblock %}
