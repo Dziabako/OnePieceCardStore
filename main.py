@@ -191,6 +191,7 @@ def login():
             return redirect(url_for('login'))
         else:
             login_user(user)
+            flash("Logged In")
             return redirect(url_for('index'))
 
     return render_template("login.html", form=form)
@@ -237,7 +238,7 @@ def edit_user(user_id):
 
         return redirect(url_for("all_users"))
 
-    return render_template("edit_user")
+    return render_template("edit_user.html", form=form, user=user)
 
 
 if __name__ == "__main__":
