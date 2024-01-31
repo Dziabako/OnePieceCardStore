@@ -1,15 +1,27 @@
 from flask import render_template, flash, redirect, url_for, request, session
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CardForm, BasketForm, UserForm, LoginForm
 from databases import Card, User, db
 from app import app, login_manager
+from functools import wraps
 
 
 db.create_all()
 @login_manager.user_loader
 def load_user(id):
     return User.query.filter(User.id == id).first()
+
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not login_manager._login_disabled:
+            if not current_user.is_authenticated or not current_user.is_admin:
+                flash('Access denied: You need to be an admin to access this page.')
+                return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -200,10 +212,13 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash("Logged OUT!")
     return redirect(url_for("index"))
 
 
 @app.route("/all_users")
+@login_required
+@admin_required
 def all_users():
     users = User.query.all()
 
@@ -223,7 +238,7 @@ def delete_user(user_id):
 def edit_user(user_id):
     user = User.query.filter(User.id == user_id).first()
     form = UserForm(obj=user)
-
+    
     if form.validate_on_submit():
         user.email = form.email.data
         user.password = form.password.data
