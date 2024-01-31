@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, IntegerField, FloatField
+from wtforms.fields import StringField, IntegerField, FloatField, BooleanField
 from wtforms.validators import DataRequired
 
 
@@ -23,6 +23,7 @@ class UserForm(FlaskForm):
     city = StringField("City: ")
     zipcode = IntegerField("ZipCode: ")
     country = StringField("Country: ")
+    is_admin = BooleanField("Is admin?: ")
 
 
 class LoginForm(FlaskForm):

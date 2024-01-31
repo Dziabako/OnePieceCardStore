@@ -14,8 +14,10 @@ def load_user(id):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    
     form = BasketForm()
     all_cards = Card.query.all()
+
 
     return render_template("index.html", form=form, cards=all_cards)
 
@@ -198,6 +200,44 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route("/all_users")
+def all_users():
+    users = User.query.all()
+
+    return render_template("all_users.html", users=users)
+
+
+@app.route('/delete_user/<user_id>')
+def delete_user(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect(url_for("all_users"))
+
+
+@app.route("/edit_user/<user_id>", methods=["GET", "POST"])
+def edit_user(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    form = UserForm(obj=user)
+
+    if form.validate_on_submit():
+        user.email = form.email.data
+        user.password = form.password.data
+        user.name = form.name.data
+        user.adress = form.adress.data
+        user.city = form.city.data
+        user.zipcode = form.zipcode.data
+        user.country = form.country.data
+        user.is_admin = form.is_admin.data
+
+        db.session.commit()
+
+        return redirect(url_for("all_users"))
+
+    return render_template("edit_user")
 
 
 if __name__ == "__main__":
