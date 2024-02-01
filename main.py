@@ -29,7 +29,7 @@ def index():
     
     form = BasketForm()
     all_cards = Card.query.all()
-
+    #session.clear()
 
     return render_template("index.html", form=form, cards=all_cards)
 
@@ -113,30 +113,33 @@ def add_basket():
         session["basket"] = []
 
     if card_id and quantity and request.method == "POST":
+        for item in session["basket"]:
+            if item["card_id"] == card.id:
+                old_quantity = int(item["quantity"])
+                new_quantity = int(request.form.get("quantity"))
+                total_price_change = (new_quantity - old_quantity) * card.price
+                item["quantity"] = new_quantity
+                item["total"] += total_price_change
+                flash("Quantity updated")
+                card.stock = int(card.stock) + old_quantity - new_quantity
+                db.session.commit()
+                return redirect(url_for("index"))
+
         dictItems = {
             "card_id": card.id,
             "card": card.name,
             "version": card.version,
             "price": card.price,
             "quantity": quantity,
-            "total": total,
-        }
+            "total": card.price * float(quantity),
+            }
 
-        if "basket" in session:
-            if card_id not in session["basket"]:
-                session["basket"].append(dictItems)
-                flash("Item has been added to basket!")
-                card.stock = int(card.stock) - int(quantity)
-                db.session.commit()
-            else:
-                new_quantity = request.form.get("quantity")
-                session["basket"][card_id]["quantity"] = new_quantity
-                flash("Quantity updated")
-                card.stock = int(card.stock) + int(quantity)
-                card.stock = int(card.stock) - int(new_quantity)
-                db.session.commit()
-            print(session["basket"])
-            return redirect(url_for("index"))
+        session["basket"].append(dictItems)
+        flash("Item has been added to basket!")
+        card.stock = int(card.stock) - int(quantity)
+        db.session.commit()
+        print(session["basket"])
+        return redirect(url_for("index"))
         
 
 @app.route("/basket")
