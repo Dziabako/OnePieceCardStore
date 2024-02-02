@@ -24,6 +24,7 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 db.create_all()
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -37,6 +38,8 @@ def index():
 
 ### CARD FUNCTIONS ###
 @app.route("/add_card", methods=["GET", "POST"])
+@login_required
+@admin_required
 def add_card():
     """Adding new card to database"""
     form = CardForm()
@@ -57,6 +60,8 @@ def add_card():
 
 
 @app.route("/all_cards")
+@login_required
+@admin_required
 def all_cards():
     cards = Card.query.all()
 
@@ -64,6 +69,8 @@ def all_cards():
 
 
 @app.route("/edit_card/<int:card_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
 def edit_card(card_id):
     card = Card.query.filter(Card.id == card_id).first()
     # Attributes from card object matching form field names will be used for field values
@@ -86,6 +93,8 @@ def edit_card(card_id):
 
 
 @app.route("/delete_card/<int:card_id>")
+@login_required
+@admin_required
 def delete_card(card_id):
     card = Card.query.filter(Card.id == card_id).first()
     db.session.delete(card)
@@ -285,6 +294,8 @@ def all_users():
 
 
 @app.route('/delete_user/<user_id>')
+@login_required
+@admin_required
 def delete_user(user_id):
     user = User.query.filter(User.id == user_id).first()
     db.session.delete(user)
@@ -294,6 +305,8 @@ def delete_user(user_id):
 
 
 @app.route("/edit_user/<user_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
 def edit_user(user_id):
     user = User.query.filter(User.id == user_id).first()
     form = UserForm(obj=user)
