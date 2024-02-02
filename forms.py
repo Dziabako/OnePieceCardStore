@@ -29,3 +29,11 @@ class UserForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField("Email: ")
     password = StringField("Password: ")
+
+
+class CheckoutForm(FlaskForm):
+    name = StringField("Name: ")
+    adress = StringField("Adress: ")
+    city = StringField("City: ")
+    zipcode = IntegerField("ZipCode: ")
+    country = StringField("Country: ")

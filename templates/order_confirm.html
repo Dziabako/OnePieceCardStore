@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Confirm Checkout {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Your order data</h1>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Name: </h3>
+        <p class="col">{{ order.name }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Address: </h3>
+        <p class="col">{{ order.adress }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">City: </h3>
+        <p class="col">{{ order.city }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Zip Code: </h3>
+        <p class="col">{{ order.zipcode }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Country: </h3>
+        <p class="col">{{ order.country }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Order number: </h3>
+        <p class="col">{{ order.order_number }}</p>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,13 +1,14 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import CardForm, BasketForm, UserForm, LoginForm
-from databases import Card, User, db
-from app import app, login_manager
+from forms import CardForm, BasketForm, UserForm, LoginForm, CheckoutForm
+from databases import Card, User, Order
+from app import app, login_manager, db
 from functools import wraps
+# Module for generating random uniqe strings for order numbers
+import uuid
 
 
-db.create_all()
 @login_manager.user_loader
 def load_user(id):
     return User.query.filter(User.id == id).first()
@@ -23,13 +24,13 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
+db.create_all()
 @app.route("/", methods=["GET", "POST"])
 def index():
     
     form = BasketForm()
     all_cards = Card.query.all()
-    #session.clear()
+    
 
     return render_template("index.html", form=form, cards=all_cards)
 
@@ -162,6 +163,49 @@ def delete_basket(card_id):
             session["basket"].remove(item)
             flash("Item has been removed from basket!")
             return redirect(url_for("basket"))
+
+
+@app.route("/checkout", methods=["GET", "POST"])
+@login_required
+def checkout():
+    user = User.query.filter(User.id == current_user.id).first()
+    form = CheckoutForm(obj=user)
+    total_price = 0
+
+    for card in session["basket"]:
+        total_price += card["total"]
+
+    if form.validate_on_submit():
+        name = form.name.data
+        adress = form.adress.data
+        city = form.city.data
+        zipcode = form.zipcode.data
+        country = form.country.data
+        user_id = current_user.id
+
+        new_order = Order(
+            user_id = user_id,
+            name = name,
+            adress = adress,
+            city = city,
+            zipcode = zipcode,
+            country = country,
+            total_price = total_price,
+            order_number = uuid.uuid4().hex
+        )
+        db.session.add(new_order)
+        db.session.commit()
+        session.clear()
+        flash("Order has been placed!")
+        return redirect(url_for("order_confirm", order_id=new_order.id))
+
+    return render_template("checkout.html", form=form, total_price=total_price)
+
+
+@app.route("/order_confirm/<order_id>")
+def order_confirm(order_id):
+    order = Order.query.filter(Order.id == order_id).first()
+    return render_template("order_confirm.html", order=order)
 
 
 ### USERS ###

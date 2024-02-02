@@ -21,3 +21,15 @@ class User(db.Model, UserMixin):
     zipcode = db.Column(db.Integer)
     country = db.Column(db.String(20))
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
+
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    name = db.Column(db.String(25))
+    adress = db.Column(db.String(75))
+    city = db.Column(db.String(20))
+    zipcode = db.Column(db.Integer)
+    country = db.Column(db.String(20))
+    total_price = db.Column(db.Float)
+    order_number = db.Column(db.String(32))

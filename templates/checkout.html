@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Checkout {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Checkout!</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Shipping Information</h2>
+            <form action="{{ url_for('checkout') }}" method="POST">
+                {{ form.csrf_token }}
+
+                <div class="row pb-lg-2">
+                    {{ form.name.label(class_="col-2 form-label") }}
+                    {{ form.name(class_="col form-control") }}
+                </div>
+
+                <div class="row pb-lg-2">
+                    {{ form.adress.label(class_="col-2 form-label") }}
+                    {{ form.adress(class_="col form-control") }}
+                </div>
+                
+                <div class="row pb-lg-2">
+                    {{ form.city.label(class_="col-2 form-label") }}
+                    {{ form.city(class_="col form-control") }}
+                </div>
+
+                <div class="row pb-lg-2">
+                    {{ form.zipcode.label(class_="col-2 form-label") }}
+                    {{ form.zipcode(class_="col form-control") }}
+                </div>
+
+                <div class="row pb-lg-2">
+                    {{ form.country.label(class_="col-2 form-label") }}
+                    {{ form.country(class_="col form-control") }}
+                </div>
+
+                <div class="row col-lg-2 pb-lg-2">
+                    <input type="submit" value="Checkout" class="btn btn-info">
+                </div>
+
+            </form>
+        </div>
+    </div>    
+</div>
+{% endblock %}

@@ -40,7 +40,7 @@
             <p class="col">{{ total_price }}</p>
         </div>
 
-        <a class="btn btn-info row-cols-1" href="#">Go to checkout</a>
+        <a class="btn btn-info row-cols-1" href="{{ url_for('checkout') }}">Go to checkout</a>
 
     </div>
 {% endblock %}
