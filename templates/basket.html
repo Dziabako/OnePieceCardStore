@@ -29,6 +29,7 @@
                     <td>{{ card['price'] }}</td>
                     <td>{{ card['quantity'] }}</td>
                     <td>{{ card['total'] }}</td>
+                    <td><a href="{{ url_for('delete_basket', card_id=card['card_id']) }}">Remove</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

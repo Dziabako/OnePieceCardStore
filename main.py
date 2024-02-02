@@ -152,6 +152,18 @@ def basket():
     return render_template("basket.html", total_price=total_price)
 
 
+@app.route("/delete_basket/<int:card_id>")
+def delete_basket(card_id):
+    for item in session["basket"]:
+        if item["card_id"] == card_id:
+            card = Card.query.filter(Card.id == card_id).first()
+            card.stock = int(card.stock) + int(item["quantity"])
+            db.session.commit()
+            session["basket"].remove(item)
+            flash("Item has been removed from basket!")
+            return redirect(url_for("basket"))
+
+
 ### USERS ###
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -257,6 +269,13 @@ def edit_user(user_id):
         return redirect(url_for("all_users"))
 
     return render_template("edit_user.html", form=form, user=user)
+
+
+@app.route("/session_clear")
+def session_clear():
+    session.clear()
+    flash("Session cleared!")
+    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
