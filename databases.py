@@ -33,3 +33,14 @@ class Order(db.Model):
     country = db.Column(db.String(20))
     total_price = db.Column(db.Float)
     order_number = db.Column(db.String(32))
+
+
+class OrderItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Float, nullable=False)
+
+    order = db.relationship('Order', backref='order_items')
+    card = db.relationship('Card')

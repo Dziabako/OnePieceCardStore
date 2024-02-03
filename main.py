@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CardForm, BasketForm, UserForm, LoginForm, CheckoutForm
-from databases import Card, User, Order
+from databases import Card, User, Order, OrderItem
 from app import app, login_manager, db
 from functools import wraps
 # Module for generating random uniqe strings for order numbers
@@ -200,10 +200,24 @@ def checkout():
             zipcode = zipcode,
             country = country,
             total_price = total_price,
+            # Generate 32 digit hex number
             order_number = uuid.uuid4().hex
         )
         db.session.add(new_order)
         db.session.commit()
+
+        # Create OrderItem for each item in the basket
+        for item in session["basket"]:
+            order_item = OrderItem(
+                order_id=new_order.id,
+                card_id=item["card_id"],
+                quantity=item["quantity"],
+                total=item["total"]
+            )
+            db.session.add(order_item)
+
+        db.session.commit()
+
         session.clear()
         flash("Order has been placed!")
         return redirect(url_for("order_confirm", order_id=new_order.id))
