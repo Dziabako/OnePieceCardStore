@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+{% block title %} Order Info {% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1 class="row">Order Info</h1>
+
+        <div class="row">
+            <h4 class="col">Name</h4>
+            <p class="col">{{ order.name }}</p>
+        </div>
+
+        <div class="row">
+            <h4 class="col">Address</h4>
+            <p class="col">{{ order.adress }}</p>
+        </div>
+
+        <div class="row">
+            <h4 class="col">Zipcode</h4>
+            <p class="col">{{ order.zipcode }}</p>
+        </div>
+
+        <div class="row">
+            <h4 class="col">Country</h4>
+            <p class="col">{{ order.country }}</p>
+        </div>
+
+        <div class="row">
+            <h4 class="col">Total price</h4>
+            <p class="col">{{ order.total_price }}</p>
+        </div>
+
+        <div class="row">
+            <h4 class="col">Order number</h4>
+            <p class="col">{{ order.order_number }}</p>
+        </div>
+
+        <h4 class="row">Order list</h4>
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Card ID</th>
+                        <th scope="col">Card name</th>
+                        <th scope="col">Version</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_item in order_items %}
+                    <tr>
+                        <td scope="row">{{ order_item.card.id }}</td>
+                        <td>{{ order_item.card.name }}</td>
+                        <td>{{ order_item.card.version }}</td>
+                        <td>{{ order_item.quantity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

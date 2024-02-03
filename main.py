@@ -298,6 +298,7 @@ def logout():
     return redirect(url_for("index"))
 
 
+### ADMIN FUNTIONS ###
 @app.route("/all_users")
 @login_required
 @admin_required
@@ -340,6 +341,36 @@ def edit_user(user_id):
         return redirect(url_for("all_users"))
 
     return render_template("edit_user.html", form=form, user=user)
+
+
+@app.route("/all_orders")
+@login_required
+@admin_required
+def all_orders():
+    orders = Order.query.all()
+
+    return render_template("all_orders.html", orders=orders)
+
+
+@app.route("/order_info/<order_id>")
+@login_required
+@admin_required
+def order_info(order_id):
+    order = Order.query.filter(Order.id == order_id).first()
+    order_items = order.order_items
+
+    return render_template("order_info.html", order=order, order_items=order_items)
+
+
+@app.route("/delete_order/<order_id>")
+@login_required
+@admin_required
+def delete_order(order_id):
+    order = Order.query.filter(Order.id == order_id).first()
+    db.session.delete(order)
+    db.session.commit()
+
+    return redirect(url_for("all_orders"))
 
 
 @app.route("/session_clear")
