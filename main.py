@@ -238,7 +238,9 @@ def register():
 
     if form.validate_on_submit():
         email = form.email.data
+        email_check = form.email_check.data
         password = form.password.data
+        password_check = form.password_check.data
         name = form.name.data
         adress = form.adress.data
         city = form.city.data
@@ -249,21 +251,22 @@ def register():
             flash("User already exist! Login first!")
             return redirect(url_for("login"))
         
-        hash_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+        if password == password_check and email == email_check:
+            hash_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
-        new_user = User(
-            email = email,
-            password = hash_password,
-            name = name,
-            adress = adress,
-            city = city,
-            zipcode = zipcode,
-            country = country
-        )
-        db.session.add(new_user)
-        db.session.commit()
-        flash("User created! You can Login now!")
-        return redirect(url_for("index"))
+            new_user = User(
+                email = email,
+                password = hash_password,
+                name = name,
+                adress = adress,
+                city = city,
+                zipcode = zipcode,
+                country = country
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            flash("User created! You can Login now!")
+            return redirect(url_for("index"))
     
     return render_template("register.html", form=form)
 

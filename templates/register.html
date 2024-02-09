@@ -21,10 +21,22 @@
                 {{ form.email(class_="form-control") }}<br>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-1 col-form-label">{{ form.email_check.label }}</div>
+            <div class="col-4">
+                {{ form.email_check(class_="form-control") }}<br>
+            </div>
+        </div>
         <div class="row  mb-3">
             <div class="col-1 col-form-label">{{ form.password.label }}</div>
             <div class="col-4">
                 {{ form.password(class_="form-control") }}<br>
+            </div>
+        </div>
+        <div class="row  mb-3">
+            <div class="col-1 col-form-label">{{ form.password_check.label }}</div>
+            <div class="col-4">
+                {{ form.password_check(class_="form-control") }}<br>
             </div>
         </div>
         <div class="row  mb-3">

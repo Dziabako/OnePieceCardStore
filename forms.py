@@ -16,13 +16,15 @@ class BasketForm(FlaskForm):
 
 
 class UserForm(FlaskForm):
-    email = StringField("Email: ")
-    password = PasswordField("Password: ")
-    name = StringField("Name: ")
-    adress = StringField("Adress: ")
-    city = StringField("City: ")
-    zipcode = IntegerField("ZipCode: ")
-    country = StringField("Country: ")
+    email = StringField("Email: ", validators=[DataRequired("Enter email")])
+    email_check = StringField("Email Check: ", validators=[DataRequired("Enter email check")])
+    password = PasswordField("Password: ", validators=[DataRequired("Enter password")])
+    password_check = PasswordField("Password Check: ", validators=[DataRequired("Enter password check")])
+    name = StringField("Name: ", validators=[DataRequired("Enter name")])
+    adress = StringField("Adress: ", validators=[DataRequired("Enter adress")])
+    city = StringField("City: ", validators=[DataRequired("Enter city")])
+    zipcode = IntegerField("ZipCode: ", validators=[DataRequired("Enter zipcode")])
+    country = StringField("Country: ", validators=[DataRequired("Enter country")])
     is_admin = BooleanField("Is admin?: ")
 
 
