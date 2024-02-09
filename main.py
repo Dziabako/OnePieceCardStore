@@ -292,10 +292,68 @@ def login():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash("Logged OUT!")
     return redirect(url_for("index"))
+
+
+@app.route("/account_details/<user_id>")
+@login_required
+def account_details(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    user_orders = Order.query.filter(Order.user_id == user_id).all()
+
+    return render_template("account_details.html", user=user, user_orders=user_orders)
+
+
+@app.route("/user_edit/<user_id>", methods=["GET", "POST"])
+def user_edit(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    form = UserForm(obj=user)
+    
+    if form.validate_on_submit():
+        new_email = form.email.data
+        if new_email != user.email:
+            user.email = new_email
+            db.session.commit()
+
+        new_password = form.password.data
+        if not check_password_hash(user.password, new_password):
+            user.password = generate_password_hash(new_password)
+            db.session.commit()
+
+        new_name = form.name.data
+        if new_name != user.name:
+            user.name = new_name
+            db.session.commit()
+        
+        new_adress = form.adress.data
+        if new_adress != user.adress:
+            user.adress = new_adress
+            db.session.commit()
+        
+        new_city = form.city.data
+        if new_city != user.city:
+            user.city = new_city
+            db.session.commit()
+
+        new_zipcode = form.zipcode.data
+        if new_zipcode != user.zipcode:
+            user.zipcode = new_zipcode
+            db.session.commit()
+
+        new_country = form.country.data
+        if new_country != user.country:
+            user.country = new_country
+            db.session.commit()
+        
+        flash("User data has been changed!")
+
+        return redirect(url_for("account_details", user_id=user.id))
+
+    return render_template("user_edit.html", form=form, user=user)
 
 
 ### ADMIN FUNTIONS ###
@@ -354,7 +412,6 @@ def all_orders():
 
 @app.route("/order_info/<order_id>")
 @login_required
-@admin_required
 def order_info(order_id):
     order = Order.query.filter(Order.id == order_id).first()
     order_items = order.order_items

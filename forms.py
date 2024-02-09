@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, IntegerField, FloatField, BooleanField
+from wtforms.fields import StringField, IntegerField, FloatField, BooleanField, PasswordField
 from wtforms.validators import DataRequired
 
 
@@ -17,7 +17,7 @@ class BasketForm(FlaskForm):
 
 class UserForm(FlaskForm):
     email = StringField("Email: ")
-    password = StringField("Password: ")
+    password = PasswordField("Password: ")
     name = StringField("Name: ")
     adress = StringField("Adress: ")
     city = StringField("City: ")
@@ -28,7 +28,7 @@ class UserForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField("Email: ")
-    password = StringField("Password: ")
+    password = PasswordField("Password: ")
 
 
 class CheckoutForm(FlaskForm):

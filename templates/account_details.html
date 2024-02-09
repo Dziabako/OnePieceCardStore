@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+
+{% block title %} Account details {% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <div class="row">
+        <h1>Account details</h1>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Email: </h3>
+        <p class="col">{{ user.email }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Name: </h3>
+        <p class="col">{{ user.name }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Adress: </h3>
+        <p class="col">{{ user.adress }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">City: </h3>
+        <p class="col">{{ user.city }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Zip Code: </h3>
+        <p class="col">{{ user.zipcode }}</p>
+    </div>
+
+    <div class="row">
+        <h3 class="col">Country: </h3>
+        <p class="col">{{ user.country }}</p>
+    </div>
+
+    <div class="row">
+        <a class="btn btn-info" href="{{ url_for('user_edit', user_id=user.id) }}">Account data edit</a>
+    </div>
+
+    <div class="row">
+        <h1>Order Data</h1>
+    </div>
+
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Total price</th>
+                    <th scope="col">Order Number</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in user_orders %}
+                <tr>
+                    <td scope="row">{{ order.id }}</td>
+                    <td>{{ order.name }}</td>
+                    <td>{{ order.total_price }}</td>
+                    <td>{{ order.order_number }}</td>
+                    <td>
+                        <a href="{{ url_for('order_info', order_id=order.id) }}" class="btn btn-info btn-sm">Info</a> 
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}
