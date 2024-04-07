@@ -29,7 +29,7 @@
                     <td>{{ card['price'] }}</td>
                     <td>{{ card['quantity'] }}</td>
                     <td>{{ card['total'] }}</td>
-                    <td><a href="{{ url_for('delete_basket', card_id=card['card_id']) }}">Remove</a></td>
+                    <td><a href="{{ url_for('basket.delete_basket', card_id=card['card_id']) }}">Remove</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -40,7 +40,7 @@
             <p class="col">{{ total_price }}</p>
         </div>
 
-        <a class="btn btn-info row-cols-1" href="{{ url_for('checkout') }}">Go to checkout</a>
+        <a class="btn btn-info row-cols-1" href="{{ url_for('basket.checkout') }}">Go to checkout</a>
 
     </div>
 {% endblock %}

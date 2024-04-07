@@ -133,3 +133,12 @@ def user_edit(user_id):
         return redirect(url_for("account_details", user_id=user.id))
 
     return render_template("user_edit.html", form=form, user=user)
+
+
+@users.route("/order_info/<order_id>")
+@login_required
+def order_info(order_id):
+    order = Order.query.filter(Order.id == order_id).first()
+    order_items = order.order_items
+
+    return render_template("order_info.html", order=order, order_items=order_items)

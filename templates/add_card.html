@@ -8,7 +8,7 @@
 </div>
 
 <div class="mx-lg-5">
-    <form id="card-form" action="{{ url_for('add_card') }}" method="POST">
+    <form id="card-form" action="{{ url_for('cards.add_card') }}" method="POST">
         {{ form.csrf_token }}
     
         <div class="row pb-lg-2">

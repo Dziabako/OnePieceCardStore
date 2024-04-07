@@ -4,7 +4,7 @@ from functools import wraps
 
 
 login_manager = LoginManager()
-login_manager.login_view = "login"
+login_manager.login_view = "users.login"
 
 
 def admin_required(f):

@@ -32,7 +32,7 @@
                 <td>{{ order.name }}</td>
                 <td>{{ order.total_price }}</td>
                 <td>
-                    <a href="{{ url_for('order_info', order_id=order.id) }}" class="btn btn-info btn-sm">Info</a>
+                    <a href="{{ url_for('admin.order_info', order_id=order.id) }}" class="btn btn-info btn-sm">Info</a>
                     <a type="button" class="btn btn-danger btn-sm delete-confirm" data-bs-toggle="modal"
                        data-bs-target="#confirmDeleteModal" data-desc="{{ 'Remove order {} from database?'.format(order.order_number) }}"
                        data-url="{{ url_for('delete_order', order_id=order.id) }}">

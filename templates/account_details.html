@@ -41,7 +41,7 @@
     </div>
 
     <div class="row">
-        <a class="btn btn-info" href="{{ url_for('user_edit', user_id=user.id) }}">Account data edit</a>
+        <a class="btn btn-info" href="{{ url_for('users.user_edit', user_id=user.id) }}">Account data edit</a>
     </div>
 
     <div class="row">
@@ -67,7 +67,7 @@
                     <td>{{ order.total_price }}</td>
                     <td>{{ order.order_number }}</td>
                     <td>
-                        <a href="{{ url_for('order_info', order_id=order.id) }}" class="btn btn-info btn-sm">Info</a> 
+                        <a href="{{ url_for('users.order_info', order_id=order.id) }}" class="btn btn-info btn-sm">Info</a> 
                     </td>
                 </tr>
                 {% endfor %}
