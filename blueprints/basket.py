@@ -51,7 +51,7 @@ def add_basket():
         
 
 @basket.route("/basket")
-def basket():
+def show_basket():
     total_price = 0
 
     for card in session["basket"]:

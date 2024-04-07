@@ -1,6 +1,6 @@
 from flask import Flask
 from blueprints.decorators import login_manager
-from blueprints.databases import db
+from blueprints.databases import db, User
 from blueprints.main import main
 from blueprints.cards import cards
 from blueprints.basket import basket
@@ -13,12 +13,14 @@ app.config.from_pyfile("config.cfg")
 app.app_context().push()
 
 
-# @login_manager.user_loader
-# def load_user(id):
-#     return User.query.filter(User.id == id).first()
-
 db.init_app(app)
 login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.filter(User.id == id).first()
+
 
 app.register_blueprint(main)
 app.register_blueprint(cards)
