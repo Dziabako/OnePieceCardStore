@@ -3,23 +3,23 @@
 {% block title %} One Piece Card Game Card Store {% endblock %}
 
 {% block body %}
-<div class="card-items mx-lg-5">
+<div class="card-items mx-lg-5 container">
 
     <!-- batch returns a container with 4 objects in it. You need to iterate over them as well. -->
     {% for row in cards | batch(4) %}
         <div class="row">
             {% for card in row %}
-            <div class="col-3 card-div text-center pb-lg-5">
-                <a href="{{ url_for('cards.card_display', card_id=card.id) }}">{{ card.name }}</a>
-                <img class="card-image" src="{{ card.image }}">
+            <div class="col-3 card-div pb-lg-5">
+                <a class="row" href="{{ url_for('cards.card_display', card_id=card.id) }}">{{ card.name }}</a>
+                <img class="card-image row" src="{{ card.image }}">
                 <h4>{{ card.version }}</h4>
                 <h4>{{ card.price }}</h4>
                 <form id="add-basket" action="{{ url_for('basket.add_basket') }}" method="POST">
                     <input type="hidden" name="card_id" value="{{ card.id }}">
-                    <h4 class="col-lg-1">Quantity: </h4>
-                    <input type="number" class="form-control col-lg-1" name="quantity" min="1" max="{{ card.stock }}">
+                    <h4>Quantity: </h4>
+                    <input type="number" class="form-control" name="quantity" min="1" max="{{ card.stock }}">
 
-                    <button type="submit" class="btn btn-info row">Add</button>
+                    <button type="submit" class="btn btn-info">Add</button>
                 </form>
             </div>
             {% endfor %}

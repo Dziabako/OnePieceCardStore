@@ -65,7 +65,7 @@ def login():
         else:
             login_user(user)
             flash("Logged In")
-            return redirect(url_for('index'))
+            return redirect(url_for('main.index'))
 
     return render_template("login.html", form=form)
 
@@ -75,7 +75,7 @@ def login():
 def logout():
     logout_user()
     flash("Logged OUT!")
-    return redirect(url_for("index"))
+    return redirect(url_for("main.index"))
 
 
 @users.route("/account_details/<user_id>")

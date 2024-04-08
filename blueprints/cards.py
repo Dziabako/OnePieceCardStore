@@ -58,7 +58,7 @@ def edit_card(card_id):
 
         flash("Succesfully updated card")
 
-        return redirect(url_for("all_cards"))
+        return redirect(url_for("cards.all_cards"))
 
     return render_template("edit_card.html", form=form, card=card)
 

@@ -13,6 +13,6 @@ def admin_required(f):
         if not login_manager._login_disabled:
             if not current_user.is_authenticated or not current_user.is_admin:
                 flash('Access denied: You need to be an admin to access this page.')
-                return redirect(url_for('index'))
+                return redirect(url_for('main.index'))
         return f(*args, **kwargs)
     return decorated_function
