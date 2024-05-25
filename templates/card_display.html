@@ -22,16 +22,15 @@
                     <div class="col"> {{ card.version }} </div>
                 </div>
                 <div class="row">
-                    <h4 class="col">Avaible: </h4>
+                    <h4 class="col">Available: </h4>
                     <div class="col"> {{ card.stock }} </div>
                 </div>
                 <div class="row">
                     <form id="add-basket" action="{{ url_for('basket.add_basket') }}" method="POST">
                         <input type="hidden" name="card_id" value="{{ card.id }}">
-                        <h4 class="col-lg-1">Quantity: </h4>
+                        <h4 class="col-lg-1">Quantity:</h4>
                         <input type="number" class="form-control col-lg-1" name="quantity" min="1" max="{{ card.stock }}">
-
-                        <input type="submit" class="btn btn-info row">Add</input>
+                        <input type="submit" class="btn btn-info btn-block col-12 mt-2" value="Add">
                     </form>
                 </div>
             </div>

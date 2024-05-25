@@ -10,16 +10,15 @@
         <div class="row">
             {% for card in row %}
             <div class="col-3 card-div pb-lg-5">
-                <div class="row justify-content-center"></div>
+                <a class="row" href="{{ url_for('cards.card_display', card_id=card.id) }}">{{ card.name }}</a>
                 <img class="card-image row" src="{{ card.image }}">
                 <h4>{{ card.version }}</h4>
                 <h4>{{ card.price }}</h4>
-                <form id="add-basket" action="{{ url_for('basket.add_basket') }}" method="POST">
+                <form class="card-div" id="add-basket" action="{{ url_for('basket.add_basket') }}" method="POST">
                     <input type="hidden" name="card_id" value="{{ card.id }}">
-                    <h4>Quantity: </h4>
+                    <h4 class="row">Quantity: </h4>
                     <input type="number" class="form-control" name="quantity" min="1" max="{{ card.stock }}">
-
-                    <button type="submit" class="btn btn-info">Add</button>
+                    <button type="submit" class="btn btn-info mt-1">Add</button>
                 </form>
             </div>
             {% endfor %}

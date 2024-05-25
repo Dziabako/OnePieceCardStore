@@ -58,7 +58,7 @@ def login():
         
         if not user: 
             flash("That email does not exist, pleae try again.")
-            return redirect(url_for('login'))
+            return redirect(url_for('users.login'))
         elif not check_password_hash(user.password, password):
             flash("Wrong password! Try again")
             return redirect(url_for('login'))
